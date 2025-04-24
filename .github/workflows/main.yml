@@ -23,7 +23,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: "mrrfv/cloudflare-gateway-pihole-scripts"
-          ref: "efc75d31e0af3112a1e2f781b2463a5a6b2086ea"
+          ref: "v1"
 
       - name: Install Node.js
         uses: actions/setup-node@v4
@@ -68,10 +68,9 @@ jobs:
           PING_URL: ${{ secrets.PING_URL }}
 
   keepalive:
+    if: github.event_name == 'schedule'
     runs-on: ubuntu-latest
     permissions:
       actions: write
-      contents: read
     steps:
-      - uses: actions/checkout@v4
-      - uses: gautamkrishnar/keepalive-workflow@v2
+      - uses: liskin/gh-workflow-keepalive@v1
